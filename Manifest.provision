@@ -1,0 +1,13 @@
+common-components/bash-shebang
+common-components/header
+common-components/exit-trap
+common-components/check-home-bin
+common-components/shared-functions
+linux-components/debian-package-update
+linux-components/debian-derivative-packages
+linux-components/rbenv
+common-components/ruby-environment
+linux-components/bundler
+common-components/default-gems
+linux-components/github
+common-components/rails-box-config

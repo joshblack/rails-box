@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 ### end common-components/bash-shebang
 
-# Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
-# desktop, no haters here) into an awesome development machine.
+# Welcome to the rails-box setup script! This is a modified version of
+# thoughtbot's laptop script for setting up an awesome dev environment.
+# (Check them out!)
 
 # This file is auto-generated. Do not edit it by hand unless you know what
-# you're doing. Please see 'CONTRIBUTING.md' for more information.
+# you're doing.
 ### end common-components/header
 
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
@@ -21,6 +22,10 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch $HOME/.zshrc
 fi
 
+if [ ! -f "$HOME/.bashrc" ]; then
+  touch $HOME/.bashrc
+fi
+
 if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
   printf 'export PATH="$HOME/.bin:$PATH"\n' >> ~/.zshrc
   printf 'export PATH="$HOME/.bin:$PATH"\n' >> ~/.bashrc
@@ -32,12 +37,6 @@ fancy_echo() {
   printf "\n%b\n" "$1"
 }
 ### end common-components/shared-functions
-
-if ! grep -qiE 'wheezy|jessie|precise|saucy|trusty' /etc/os-release; then
-  fancy_echo "Sorry! we don't currently support that distro."
-  exit 1
-fi
-### end linux-components/distro-check
 
 fancy_echo "Updating system packages ..."
   if command -v aptitude >/dev/null; then
@@ -91,33 +90,11 @@ fancy_echo "Installing zsh ..."
 
 fancy_echo "Installing node, to render the rails asset pipeline ..."
   sudo aptitude install -y nodejs
+
+fancy_echo "Installing nginx, to serve our apps ..."
+  sudo aptitidue install -y nginx
+  sudo /etc/init.d/nginx start
 ### end linux-components/debian-derivative-packages
-
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
-### end common-components/zsh
-
-silver_searcher_from_source() {
-  git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-  sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-  sh /tmp/the_silver_searcher/build.sh
-  cd /tmp/the_silver_searcher
-  sh build.sh
-  sudo make install
-  cd
-  rm -rf /tmp/the_silver_searcher
-}
-
-if ! command -v ag >/dev/null; then
-  fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-
-  if aptitude show silversearcher-ag &>/dev/null; then
-    sudo aptitude install silversearcher-ag
-  else
-    silver_searcher_from_source
-  fi
-fi
-### end linux-components/silver-searcher
 
 if [[ ! -d "$HOME/.rbenv" ]]; then
   fancy_echo "Installing rbenv, to change Ruby versions ..."
@@ -126,11 +103,6 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
     if ! grep -qs "rbenv init" ~/.zshrc; then
       printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.zshrc
       printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
-    fi
-
-    if ! grep -qs "rbenv init" ~/.bashrc; then
-      printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.bashrc
-      printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.bashrc
     fi
 
     export PATH="$HOME/.rbenv/bin:$PATH"
@@ -177,31 +149,12 @@ fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
   gem install suspenders --no-document
 ### end common-components/default-gems
 
-fancy_echo "Installing Heroku CLI client ..."
-  curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end linux-components/heroku
-
 fancy_echo "Installing GitHub CLI client ..."
   curl http://hub.github.com/standalone -sLo ~/.bin/hub
   chmod +x ~/.bin/hub
 ### end linux-components/github
 
-fancy_echo "Installing rcm, to manage your dotfiles ..."
-  wget -O /tmp/rcm_1.1.0_all.deb http://mike-burns.com/project/rcm/rcm_1.1.0_all.deb
-  sudo dpkg -i /tmp/rcm_1.1.0_all.deb
-  rm -f /tmp/rcm_1.1.0_all.deb
-### end linux-components/rcm
-
 fancy_echo "Setting permissions on shims so rbenv rehash will work properly ..."
   chmod -R 775 ~/.rbenv/shims
+### end common-components/rails-box-config
 
-fancy_echo "Installing maximum-awesome for vim config files ..."
-  git clone git://github.com/square/maximum-awesome.git
-  rake
-
-fancy_echo "Installing and starting up nginx ..."
-  sudo aptitude install -y nginx
-  sudo /etc/init.d/nginx start

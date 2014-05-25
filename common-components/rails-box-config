@@ -1,0 +1,2 @@
+fancy_echo "Setting permissions on shims so rbenv rehash will work properly ..."
+  chmod -R 775 ~/.rbenv/shims

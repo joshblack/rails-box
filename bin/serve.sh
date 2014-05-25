@@ -5,7 +5,7 @@ block="server {
     server_name $1;
     root $2;
 
-    index index.html index.htm index.php;
+    index index.html index.htm;
 
     charset utf-8;
 
@@ -19,16 +19,7 @@ block="server {
     access_log off;
     error_log  /var/log/nginx/$1-error.log error;
 
-    error_page 404 /index.php;
-
     sendfile off;
-
-    location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-    }
 
     location ~ /\.ht {
         deny all;

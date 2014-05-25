@@ -10,12 +10,18 @@ class RailsBox
     config.vm.network :forwarded_port, host: 3000, guest: 3000
     config.vm.network :forwarded_port, host: 4000, guest: 80
 
+    # Provision
+    config.vm.provision :shell, privileged: false, :path => "./provision"
+
     # Configure A Few VirtualBox Settings
     config.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--memory", settings["memory"] ||= "2048"]
-      vb.customize ["modifyvm", :id, "--cpus", settings["cpus"] ||= "1"]
-      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      settings["vm-config"].each do |config|
+          vb.customize ["modifyvm", :id, "--memory", config["memory"] ||= "2048"]
+          vb.customize ["modifyvm", :id, "--cpus", config["cpus"] ||= "1"]
+      end
+
+      # vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
 
     # Fix stdin: is not a tty issue

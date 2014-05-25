@@ -1,7 +1,11 @@
 ---
+vm-config:
+    - memory: "2048"
+      cpus: "1"
+
 folders:
-    - map: /Users/joshblack/Sites/rails-box/test-app
-      to: /home/vagrant/rails-box/test-app
+    - map: /Users/joshblack/Sites/test-app
+      to: /home/vagrant/Sites/test-app
 
 sites:
     - map: example.app
