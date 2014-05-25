@@ -1,0 +1,8 @@
+---
+folders:
+    - map: /Users/joshblack/Sites/rails-box/test-app
+      to: /home/vagrant/rails-box/test-app
+
+sites:
+    - map: example.app
+      to: /home/vagrant/rails-box/test-app/public
