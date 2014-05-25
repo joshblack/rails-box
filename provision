@@ -96,10 +96,6 @@ fancy_echo "Installing zsh ..."
 
 fancy_echo "Installing node, to render the rails asset pipeline ..."
   sudo aptitude install -y nodejs
-
-fancy_echo "Installing nginx, to serve our apps ..."
-  sudo aptitidue install -y nginx
-  sudo /etc/init.d/nginx start
 ### end linux-components/debian-derivative-packages
 
 silver_searcher_from_source() {
@@ -194,6 +190,11 @@ fancy_echo "Installing rcm, to manage your dotfiles ..."
   sudo dpkg -i /tmp/rcm_1.1.0_all.deb
   rm -f /tmp/rcm_1.1.0_all.deb
 ### end linux-components/rcm
+
+fancy_echo "Installing nginx, to serve our apps ..."
+  sudo aptitidue install -y nginx
+  sudo /etc/init.d/nginx start
+### end linux-components/nginx
 
 fancy_echo "Setting permissions on shims so rbenv rehash will work properly ..."
   chmod -R 775 ~/.rbenv/shims

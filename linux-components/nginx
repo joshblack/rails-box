@@ -1,0 +1,3 @@
+fancy_echo "Installing nginx, to serve our apps ..."
+  sudo aptitude install -y nginx
+  sudo /etc/init.d/nginx start

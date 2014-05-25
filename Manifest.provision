@@ -14,4 +14,5 @@ common-components/default-gems
 linux-components/heroku
 linux-components/github
 linux-components/rcm
+linux-components/nginx
 common-components/rails-box-config

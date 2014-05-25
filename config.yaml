@@ -5,7 +5,7 @@ vm-config:
 
 folders:
     - map: /Users/joshblack/Sites/test-app
-      to: /home/vagrant/Sites/test-app
+      to: /home/vagrant/sites/test-app
 
 sites:
     - map: example.app
