@@ -11,7 +11,7 @@ class RailsBox
     config.vm.network :forwarded_port, host: 4000, guest: 80
 
     # Provision
-    config.vm.provision :shell, privileged: false, :path => "./provision"
+    config.vm.provision :shell, privileged: false, :path => "provision"
 
     # Configure A Few VirtualBox Settings
     config.vm.provider "virtualbox" do |vb|

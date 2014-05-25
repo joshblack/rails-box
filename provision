@@ -38,6 +38,12 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
+if ! grep -qiE 'wheezy|jessie|precise|saucy|trusty' /etc/os-release; then
+  fancy_echo "Sorry! we don't currently support that distro."
+  exit 1
+fi
+### end linux-components/distro-check
+
 fancy_echo "Updating system packages ..."
   if command -v aptitude >/dev/null; then
     fancy_echo "Using aptitude ..."
@@ -96,6 +102,28 @@ fancy_echo "Installing nginx, to serve our apps ..."
   sudo /etc/init.d/nginx start
 ### end linux-components/debian-derivative-packages
 
+silver_searcher_from_source() {
+  git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
+  sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+  sh /tmp/the_silver_searcher/build.sh
+  cd /tmp/the_silver_searcher
+  sh build.sh
+  sudo make install
+  cd
+  rm -rf /tmp/the_silver_searcher
+}
+
+if ! command -v ag >/dev/null; then
+  fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
+
+  if aptitude show silversearcher-ag &>/dev/null; then
+    sudo aptitude install silversearcher-ag
+  else
+    silver_searcher_from_source
+  fi
+fi
+### end linux-components/silver-searcher
+
 if [[ ! -d "$HOME/.rbenv" ]]; then
   fancy_echo "Installing rbenv, to change Ruby versions ..."
     git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -149,10 +177,23 @@ fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
   gem install suspenders --no-document
 ### end common-components/default-gems
 
+fancy_echo "Installing Heroku CLI client ..."
+  curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
+  heroku plugins:install git://github.com/ddollar/heroku-config.git
+### end linux-components/heroku
+
 fancy_echo "Installing GitHub CLI client ..."
   curl http://hub.github.com/standalone -sLo ~/.bin/hub
   chmod +x ~/.bin/hub
 ### end linux-components/github
+
+fancy_echo "Installing rcm, to manage your dotfiles ..."
+  wget -O /tmp/rcm_1.1.0_all.deb http://mike-burns.com/project/rcm/rcm_1.1.0_all.deb
+  sudo dpkg -i /tmp/rcm_1.1.0_all.deb
+  rm -f /tmp/rcm_1.1.0_all.deb
+### end linux-components/rcm
 
 fancy_echo "Setting permissions on shims so rbenv rehash will work properly ..."
   chmod -R 775 ~/.rbenv/shims
