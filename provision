@@ -129,6 +129,11 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
       printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.zshrc
     fi
 
+    if ! grep -qs "rbenv init" ~/.bashrc; then
+      printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.bashrc
+      printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.bashrc
+    fi
+
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
@@ -173,13 +178,6 @@ fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
   gem install suspenders --no-document
 ### end common-components/default-gems
 
-fancy_echo "Installing Heroku CLI client ..."
-  curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end linux-components/heroku
-
 fancy_echo "Installing GitHub CLI client ..."
   curl http://hub.github.com/standalone -sLo ~/.bin/hub
   chmod +x ~/.bin/hub
@@ -192,7 +190,7 @@ fancy_echo "Installing rcm, to manage your dotfiles ..."
 ### end linux-components/rcm
 
 fancy_echo "Installing nginx, to serve our apps ..."
-  sudo aptitidue install -y nginx
+  sudo aptitude install -y nginx
   sudo /etc/init.d/nginx start
 ### end linux-components/nginx
 
