@@ -7,6 +7,9 @@ vm-config:
 # Specify the path for your SSH key
 authorize: /Users/me/.ssh/id_rsa.pub
 
+keys:
+    - /Users/me/.ssh/id_rsa
+
 # Specify the path for each folder you'd like to share with the virtual machine
 folders:
     - map: /Users/me/path/to/code

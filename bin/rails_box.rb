@@ -24,6 +24,12 @@ class RailsBox
       # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
 
+    # Configure The Public Key For SSH Access
+    config.vm.provision "shell" do |s|
+      s.inline = "echo $1 | tee -a /home/vagrant/.ssh/authorized_keys"
+      s.args = [File.read(settings["authorize"])]
+    end
+
     # Copy The SSH Private Keys To The Box
     settings["keys"].each do |key|
       config.vm.provision "shell" do |s|
