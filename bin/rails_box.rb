@@ -3,7 +3,7 @@ class RailsBox
   def RailsBox.configure(config, settings)
 
     # Setup our box
-    config.vm.box = "ubuntu/trusty64"
+    config.vm.box = "ubuntu/precise32"
     config.vm.hostname = "rails-box"
 
     # Networking

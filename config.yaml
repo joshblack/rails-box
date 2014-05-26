@@ -5,10 +5,10 @@ vm-config:
       cpus: "1"
 
 # Specify the path for your SSH key
-authorize: /Users/me/.ssh/id_rsa.pub
+authorize: /Users/joshblack/.ssh/id_rsa.pub
 
 keys:
-    - /Users/me/.ssh/id_rsa
+    - /Users/joshblack/.ssh/id_rsa
 
 # Specify the path for each folder you'd like to share with the virtual machine
 folders:

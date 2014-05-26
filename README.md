@@ -18,3 +18,10 @@ A Vagrant setup for Rails installations.
     - In this case, go to your system's environment variable list and change `VBOX_MSI_INSTALL_PATH` to `VBOX_INSTALL_PATH` and that should solve your issues. Just restart your shell after editing the entry
     - Note: you can find the environment variable list on Windows by just typing in the search field for `environment variables` and selecting `Edit the system environment variables`
 
+### Vagrant Plugins
+I have the following Vagrant Plugins installed for handling things.
+- `vagrant-hostsupdater`
+- `vagrant-login`
+- `vagrant-share`
+- `vagrant-triggers`
+- `vagrant-vbguest`
