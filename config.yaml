@@ -4,9 +4,5 @@ vm-config:
       cpus: "1"
 
 folders:
-    - map: /Users/joshblack/Sites/test-app
-      to: /home/vagrant/sites/test-app
-
-sites:
-    - map: example.app
-      to: /home/vagrant/sites/test-app/public
+    - map: /Users/me/path/to/app
+      to: /home/vagrant/path/to/app
