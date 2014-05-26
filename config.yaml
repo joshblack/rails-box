@@ -1,8 +1,15 @@
 ---
+# Specify configuration for your virtual machine
 vm-config:
     - memory: "2048"
       cpus: "1"
 
+# Specify the path for your SSH key
+authorize: /Users/me/.ssh/id_rsa.pub
+
+# Specify the path for each folder you'd like to share with the virtual machine
 folders:
-    - map: /Users/me/path/to/app
-      to: /home/vagrant/path/to/app
+    - map: /Users/me/path/to/code
+      to: /home/vagrant/path/to/code
+    - map: /Users/me/more/code
+      to: /home/vagrant/more/code
