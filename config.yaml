@@ -9,4 +9,4 @@ folders:
 
 sites:
     - map: example.app
-      to: /home/vagrant/rails-box/test-app/public
+      to: /home/vagrant/sites/test-app/public

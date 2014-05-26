@@ -13,5 +13,4 @@ linux-components/bundler
 common-components/default-gems
 linux-components/github
 linux-components/rcm
-linux-components/nginx
 common-components/rails-box-config
