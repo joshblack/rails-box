@@ -15,6 +15,6 @@ A Vagrant setup for Rails installations.
 
 - For Windows Users, you may get an error stating:
     - `Please find the VBOXMANAGE Binary and add it to the path environment`
-    - In this case, go to your system's environment variable list and change `VBOX_MSI_INSTALL_PATH` to `VBOX_INSTALL_PATH` and that should solve your issues
+    - In this case, go to your system's environment variable list and change `VBOX_MSI_INSTALL_PATH` to `VBOX_INSTALL_PATH` and that should solve your issues. Just restart your shell after editing the entry
     - Note: you can find the environment variable list on Windows by just typing in the search field for `environment variables` and selecting `Edit the system environment variables`
 
